@@ -15,7 +15,10 @@ io.on("connection", function(socket){
     socket.on("send-location", function(data){
         io.emit("received-location", {id:socket.id, ...data});
     });
-    console.log("A client has connected via Socket.IO");
+
+    socket.on("disconnect", function(){
+        io.emit("user-disconnected", socket.id);
+    });
 });
 
 app.get("/", function(req, res) {
